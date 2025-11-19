@@ -1,5 +1,6 @@
 package com.gdg.oauthgooglelogin.service;
 
+import com.gdg.oauthgooglelogin.domain.Provider;
 import com.gdg.oauthgooglelogin.exception.CustomException;
 import com.gdg.oauthgooglelogin.exception.ErrorCode;
 import com.gdg.oauthgooglelogin.jwt.TokenProvider;
@@ -8,7 +9,7 @@ import com.google.gson.Gson;
 import com.gdg.oauthgooglelogin.domain.Role;
 import com.gdg.oauthgooglelogin.domain.User;
 import com.gdg.oauthgooglelogin.dto.TokenDto;
-import com.gdg.oauthgooglelogin.dto.UserInfo;
+import com.gdg.oauthgooglelogin.dto.user.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -69,6 +70,7 @@ public class GoogleLoginService {
                 .orElseGet(() -> userRepository.save(User.builder() //처음 로그인하는 경우?
                         .email(userInfo.getEmail())
                         .name(userInfo.getName())
+                        .provider(Provider.GOOGLE)
                         .profileUrl(userInfo.getPictureUrl())
                         .role(Role.ROLE_USER)
                         .build())

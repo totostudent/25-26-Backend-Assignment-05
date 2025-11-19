@@ -25,8 +25,15 @@ public class User { //DB에서 쓸 user
     @Column(name = "user_email", nullable = false)
     private String email;
 
+    @Column(name = "user_password", nullable = false)
+    private String password; //자체 회원가입 시에만 사용
+
     @Column(name = "user_name", nullable = false)
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_provider", nullable = false)
+    private Provider provider; //GOOGLE
 
     @Column(name = "user_profile", nullable = false)
     private String profileUrl; //소셜 로그인 이후 전달받는 '구글 계정 프로필 사진 url'
@@ -36,9 +43,11 @@ public class User { //DB에서 쓸 user
     private Role role;
 
     @Builder
-    public User(Long id, String email, String name, String profileUrl, Role role) {
+    public User(Long id, String email, String password, String name, Provider provider, String profileUrl, Role role) {
         this.id = id;
         this.email = email;
+        this.password = password;
+        this.provider = provider;
         this.name = name;
         this.profileUrl = profileUrl;
         this.role = role;

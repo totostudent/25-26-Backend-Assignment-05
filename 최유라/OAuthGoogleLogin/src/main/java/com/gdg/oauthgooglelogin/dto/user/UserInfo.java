@@ -1,4 +1,4 @@
-package com.gdg.oauthgooglelogin.dto;
+package com.gdg.oauthgooglelogin.dto.user;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserInfo { //OAuth에서 쓸 user 정보?(service 계층에서 사용한다)
+public class UserInfo { //구글 OAuth에서 내려주는 user 정보?(service 계층에서 사용한다)
 
     private String id;
     private String email;

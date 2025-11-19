@@ -44,14 +44,14 @@ public class TokenProvider {
         this.accessTokenValidityTime = accessTokenValidityTime;
     }
 
-    public String createAccessToken(User user) {
+    public String createAccessToken(User User) {
         long nowTime = (new Date().getTime());
 
         Date accessTokenExpiredTime = new Date(nowTime + accessTokenValidityTime);
 
         return Jwts.builder()
-                .setSubject(user.getId().toString()) //토큰 제목(유저 이름)
-                .claim(ROLE_CLAIM, user.getRole().name()) //권한 정보
+                .setSubject(User.getId().toString()) //토큰 제목(유저 이름)
+                .claim(ROLE_CLAIM, User.getRole().name()) //권한 정보
                 .setExpiration(accessTokenExpiredTime) //토큰 만료 시간
                 .signWith(key, SignatureAlgorithm.HS256) //HS256은 대칭키? 기반 SHA-256 해시? 만들어 서명하는 알고리즘
                 .compact(); //최종 jwt 문자열 생성?

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,8 +26,8 @@ public class MemoController {
     private final MemoService memoService;
 
     @PostMapping
-    public ResponseEntity<MemoInfoResponse> createMemo(@RequestBody MemoCreateRequest memoCreateRequest) {
-        return ResponseEntity.created(URI.create("/memo/")).body(memoService.createMemo(memoCreateRequest));
+    public ResponseEntity<MemoInfoResponse> createMemo(Principal principal, @RequestBody MemoCreateRequest memoCreateRequest) {
+        return ResponseEntity.created(URI.create("/memo/")).body(memoService.createMemo(principal, memoCreateRequest));
     }
 
     @GetMapping("/{memoId}")
@@ -35,13 +36,13 @@ public class MemoController {
     }
 
     @PatchMapping("/{memoId}")
-    public ResponseEntity<MemoInfoResponse> updateMemo(@RequestBody Long memoId, @RequestBody MemoUpdateRequest memoUpdateRequest) {
-        return ResponseEntity.ok(memoService.updateMemo(memoId, memoUpdateRequest));
+    public ResponseEntity<MemoInfoResponse> updateMemo(Principal principal, @RequestBody Long memoId, @RequestBody MemoUpdateRequest memoUpdateRequest) {
+        return ResponseEntity.ok(memoService.updateMemo(principal, memoId, memoUpdateRequest));
     }
 
     @DeleteMapping("/{memoId}")
-    public ResponseEntity<MemoInfoResponse> deleteMemo(@PathVariable Long memoId) {
-        memoService.deleteMemo(memoId);
+    public ResponseEntity<MemoInfoResponse> deleteMemo(Principal principal, @PathVariable Long memoId) {
+        memoService.deleteMemo(principal, memoId);
         return ResponseEntity.noContent().build();
     }
 }

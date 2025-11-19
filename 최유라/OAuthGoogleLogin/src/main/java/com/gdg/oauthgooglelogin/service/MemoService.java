@@ -11,16 +11,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
+
 @Service
 @RequiredArgsConstructor
 public class MemoService {
 
     private final MemoRepository memoRepository;
+    private final com.gdg.oauthgooglelogin.service.UserService userService;
 
     @Transactional
-    public MemoInfoResponse createMemo(MemoCreateRequest memoCreateRequest) {
+    public MemoInfoResponse createMemo(Principal principal, MemoCreateRequest memoCreateRequest) {
         Memo memo = memoRepository.save(Memo.builder()
                     .content(memoCreateRequest.content())
+                    .user(userService.getUserEntity(Long.parseLong(principal.getName())))
                     .build());
 
         return MemoInfoResponse.fromEntity(memo);
@@ -32,8 +36,9 @@ public class MemoService {
     }
 
     @Transactional
-    public MemoInfoResponse updateMemo(Long MemoId, MemoUpdateRequest memoUpdateRequest) {
+    public MemoInfoResponse updateMemo(Principal principal, Long MemoId, MemoUpdateRequest memoUpdateRequest) {
         Memo memo = getMemo(MemoId);
+        validateAuthor(principal, memo);
 
         memo.update(
                 memoUpdateRequest.content() == null ? memo.getContent() : memoUpdateRequest.content()
@@ -42,8 +47,9 @@ public class MemoService {
     }
 
     @Transactional
-    public void deleteMemo(Long MemoId) {
+    public void deleteMemo(Principal principal, Long MemoId) {
         Memo memo = getMemo(MemoId);
+        validateAuthor(principal, memo);
 
         memoRepository.delete(memo);
     }
@@ -51,5 +57,11 @@ public class MemoService {
     private Memo getMemo(Long MemoId) { //이건 무슨 용도지..MemoService 에서 쓰는 메소드 정의해 놓은 걸까..
         return memoRepository.findById(MemoId)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMO_NOT_FOUND)); //존재하지 않는 메모
+    }
+
+    private void validateAuthor(Principal principal, Memo memo) {
+        if (!memo.getUser().getId().equals(Long.parseLong(principal.getName()))) {
+            throw new CustomException(ErrorCode.HAVE_NO_ROLE);
+        }
     }
 }

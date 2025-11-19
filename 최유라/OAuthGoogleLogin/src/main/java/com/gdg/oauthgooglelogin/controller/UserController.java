@@ -1,23 +1,26 @@
 package com.gdg.oauthgooglelogin.controller;
 
-import com.gdg.oauthgooglelogin.domain.User;
-import com.gdg.oauthgooglelogin.service.GoogleLoginService;
+import com.gdg.oauthgooglelogin.dto.TokenDto;
+import com.gdg.oauthgooglelogin.dto.user.UserSignUpRequest;
+import com.gdg.oauthgooglelogin.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
-    private final GoogleLoginService googleLoginService;
+    private final UserService userService;
 
-    @GetMapping("/test") //구글 소셜 로그인된 계정 조회
-    public User getUser(Principal principal) {
-        return googleLoginService.test(principal);
+    @PostMapping("/signup")
+    public ResponseEntity<TokenDto> signUp(@RequestBody UserSignUpRequest userSignUpRequest) {
+        return ResponseEntity.created(URI.create("/user/")).body(userService.signUp(userSignUpRequest));
     }
 }
