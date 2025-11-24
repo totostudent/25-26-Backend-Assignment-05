@@ -34,8 +34,7 @@ public class Memo { //DB에서 쓸 memo
     private User user;
 
     @Builder
-    public Memo(Long id, String content, User user) {
-        this.id = id;
+    public Memo(String content, User user) {
         this.content = content;
         this.user = user;
     }

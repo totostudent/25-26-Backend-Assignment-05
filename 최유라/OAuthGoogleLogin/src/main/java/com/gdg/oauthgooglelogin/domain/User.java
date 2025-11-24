@@ -25,8 +25,8 @@ public class User { //DB에서 쓸 user
     @Column(name = "user_email", nullable = false)
     private String email;
 
-    @Column(name = "user_password", nullable = false)
-    private String password; //자체 회원가입 시에만 사용
+    @Column(name = "user_password")
+    private String password; //자체 회원가입 시에만 사용, 소셜 로그인 시에는 비어 있음
 
     @Column(name = "user_name", nullable = false)
     private String name;
@@ -35,7 +35,7 @@ public class User { //DB에서 쓸 user
     @Column(name = "user_provider", nullable = false)
     private Provider provider; //GOOGLE
 
-    @Column(name = "user_profile", nullable = false)
+    @Column(name = "user_profile")
     private String profileUrl; //소셜 로그인 이후 전달받는 '구글 계정 프로필 사진 url'
 
     @Enumerated(EnumType.STRING)

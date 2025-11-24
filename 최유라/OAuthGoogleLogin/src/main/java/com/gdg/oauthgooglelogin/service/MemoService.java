@@ -18,7 +18,7 @@ import java.security.Principal;
 public class MemoService {
 
     private final MemoRepository memoRepository;
-    private final com.gdg.oauthgooglelogin.service.UserService userService;
+    private final UserService userService;
 
     @Transactional
     public MemoInfoResponse createMemo(Principal principal, MemoCreateRequest memoCreateRequest) {

@@ -34,8 +34,8 @@ public class GoogleLoginService {
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
-    public String getGoogleAccessToken(String code, @Value("${security.oauth2.client.registration.google.client-id}") String ID,
-                                       @Value("${security.oauth2.client.registration.google.client-secret}") String secret) {
+    public String getGoogleAccessToken(String code, @Value("${spring.security.oauth2.client.registration.google.client-id}") String ID,
+                                       @Value("${spring.security.oauth2.client.registration.google.client-secret}") String secret) {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> params = Map.of(
                 "code", code,

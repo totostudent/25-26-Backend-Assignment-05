@@ -40,7 +40,8 @@ public class SecurityConfig { //프로그램 설정 정의하는 클래스
                                 "/", "/index.html",     // 공개 랜딩
                                 "/login/**", "/oauth2/**",
                                 "/error", "/favicon.ico",
-                                "/static/**", "/assets/**"
+                                "/static/**", "/assets/**",
+                                "/user/signup" //로컬 로그인 관련
                         ).permitAll()
                         .requestMatchers("/gdg/**").authenticated()
                         .anyRequest().authenticated()

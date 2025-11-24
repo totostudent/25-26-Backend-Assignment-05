@@ -36,7 +36,7 @@ public class MemoController {
     }
 
     @PatchMapping("/{memoId}")
-    public ResponseEntity<MemoInfoResponse> updateMemo(Principal principal, @RequestBody Long memoId, @RequestBody MemoUpdateRequest memoUpdateRequest) {
+    public ResponseEntity<MemoInfoResponse> updateMemo(Principal principal, @PathVariable Long memoId, @RequestBody MemoUpdateRequest memoUpdateRequest) {
         return ResponseEntity.ok(memoService.updateMemo(principal, memoId, memoUpdateRequest));
     }
 

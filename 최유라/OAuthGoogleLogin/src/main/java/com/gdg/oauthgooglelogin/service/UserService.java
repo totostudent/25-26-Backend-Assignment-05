@@ -35,6 +35,10 @@ public class UserService {
             throw new CustomException(ErrorCode.ALREADY_LOGIN);
         }
 
+        if (userRepository.existEmail(userSignupRequest.email())) { //이메일 중복 여부 확인
+            throw new CustomException(ErrorCode.ALREADY_EXIST_EMAIL);
+        }
+
         User user = userRepository.save(User.builder()
                 .email(userSignupRequest.email())
                 .password(passwordEncoder.encode(userSignupRequest.password()))
