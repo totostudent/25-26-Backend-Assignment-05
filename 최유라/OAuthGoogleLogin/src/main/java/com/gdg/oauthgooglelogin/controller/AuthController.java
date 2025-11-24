@@ -21,8 +21,8 @@ public class AuthController {
     private final GoogleLoginService googleLoginService;
 
     @GetMapping("/callback/google")
-    public TokenDto googleCallback(@RequestParam String code, @Value("${security.oauth2.client.registration.google.client-id}") String ID,
-                                   @Value("${security.oauth2.client.registration.google.client-secret}") String secret) {
+    public TokenDto googleCallback(@RequestParam String code, @Value("${spring.security.oauth2.client.registration.google.client-id}") String ID,
+                                   @Value("${spring.security.oauth2.client.registration.google.client-secret}") String secret) {
         String googleAccessToken = googleLoginService.getGoogleAccessToken(code, ID, secret);
         return loginOrSignup(googleAccessToken);
     }
