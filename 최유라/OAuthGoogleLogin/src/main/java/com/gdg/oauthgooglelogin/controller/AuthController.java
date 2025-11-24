@@ -15,7 +15,7 @@ import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-@RequestMapping("/api")
+@RequestMapping("/api/oauth2")
 public class AuthController {
 
     private final GoogleLoginService googleLoginService;

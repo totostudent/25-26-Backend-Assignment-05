@@ -29,7 +29,7 @@ import java.util.Map;
 public class GoogleLoginService {
 
     private final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
-    private final String GOOGLE_REDIRECT_URI = "http://localhost:8080/api/callback/google";
+    private final String GOOGLE_REDIRECT_URI = "http://localhost:8080/api/oauth2/callback/google";
 
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
